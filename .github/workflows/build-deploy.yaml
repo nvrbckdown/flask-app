@@ -23,4 +23,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tag: $REPO:$ENV_TAG
+          tag: nvrbckdown/flask-app:latest
