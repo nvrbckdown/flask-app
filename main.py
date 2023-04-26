@@ -6,8 +6,14 @@ app=Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def default():
+    postgres = os.environ.get("POSTGRES_HOST")
+    city = os.environ.get("CITY")
+    name = os.environ.get("MENTOR")
     res = {
-		'string': 'Udevs DevOps Bootcamp'
+		'string': 'Udevs DevOps Bootcamp',
+        'postgres': postgres,
+        'city': city,
+        'mentor': name 
 	}
     return jsonify(res)
 
