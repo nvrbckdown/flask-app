@@ -9,11 +9,15 @@ def default():
     postgres = os.environ.get("POSTGRES_HOST")
     city = os.environ.get("CITY")
     name = os.environ.get("MENTOR")
+    node = os.environ.get("MY_NODE_NAME")
+    pod = os.environ.get("MY_POD_NAME")
     res = {
 		'string': 'Udevs DevOps Bootcamp',
         'postgres': postgres,
         'city': city,
-        'mentor': name 
+        'mentor': name,
+        'pod': pod,
+        'node': node
 	}
     return jsonify(res)
 
