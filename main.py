@@ -4,40 +4,56 @@ import os
 
 app=Flask(__name__)
 
+env = os.environ.get("ENV")
+http_port = os.environ.get("HTTP_PORT")
+postgres = os.environ.get("POSTGRES_HOST")
+postgres_port = os.environ.get("POSTRES_PORT")
+postgres_db = os.environ.get("POSTGRES_DB")
+postgres_user = os.environ.get("POSTGRES_USER")
+postgres_password = os.environ.get("POSTGRES_PASSWORD")
+token = os.environ.get("TOKEN"),
+address = os.environ.get("ADDRESS")
+pod = os.environ.get("MY_POD_NAME")
+node = os.environ.get("MY_NODE_NAME")
+
 @app.route('/', methods=['GET'])
 def default():
-    postgres = os.environ.get("POSTGRES_HOST")
-    city = os.environ.get("CITY")
-    name = os.environ.get("MENTOR")
-    node = os.environ.get("MY_NODE_NAME")
-    pod = os.environ.get("MY_POD_NAME")
+    env = os.environ.get("ENV")
+    http_port = os.environ.get("HTTP_PORT")
     res = {
-		'string': 'Udevs DevOps Bootcamp',
-        'postgres': postgres,
-        'city': city,
-        'mentor': name,
-        'pod': pod,
-        'node': node
+		'string': 'Deployment',
+        'env': env,
+        'http_port': http_port,
+        
 	}
     return jsonify(res)
 
-@app.route('/project', methods=['GET'])
+@app.route('/psql', methods=['GET'])
 def get_project():
     res = {
-		'string': 'Udevs DevOps Bootcamp'
+		'string': 'PSQL',
+        'postgres': postgres,
+        'postgres_port': postgres_port,
+        'postgres_user': postgres_user,
+        'postgres_db': postgres_db,
+        'postgres_password': postgres_password,
 	}
     return jsonify(res)
 
-@app.route('/practice', methods=['GET'])
-def get_practice():
+@app.route('/payme', methods=['GET'])
+def get_address():
     res = {
-		'string': 'Get Practice Message!'
+		'string': 'Payme',
+        'token': token,
+        'address': address
 	}
     return jsonify(res)
 
-@app.route('/backend', methods=['GET'])
-def get_backend():
+@app.route('/pod', methods=['GET'])
+def get_pod():
     res = {
-		'string': 'Back-End Rulezzz!'
+		'string': 'Payme',
+        'pod': pod,
+        'node': node
 	}
     return jsonify(res)
