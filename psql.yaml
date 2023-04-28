@@ -1,0 +1,5 @@
+pg_host=10.100.100.100
+pg_db=user-service
+pg_user=user-service
+pg_port=5432
+pg_password=SuperSecret
