@@ -35,7 +35,7 @@ def default():
     return jsonify(res)
 
 @app.route('/psql', methods=['GET'])
-def get_project():
+def get_psql():
     res = {
 		'string': 'PSQL',
         'postgres': postgres,
@@ -47,9 +47,9 @@ def get_project():
     return jsonify(res)
 
 @app.route('/mongo', methods=['GET'])
-def get_project():
+def get_mongo():
     res = {
-		'string': 'PSQL',
+		'string': 'Mongo',
         'mongo': mongo_host,
         'mongo_port': mongo_port,
         'mongo_user': mongo_user,
@@ -70,7 +70,7 @@ def get_address():
 @app.route('/pod', methods=['GET'])
 def get_pod():
     res = {
-		'string': 'Payme',
+		'string': 'Pod',
         'pod': pod,
         'node': node,
         'namespace': ns
