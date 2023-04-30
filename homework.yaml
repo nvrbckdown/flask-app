@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  creationTimestamp: null
   labels:
     app: flask-app
   name: flask-app
@@ -12,6 +13,7 @@ spec:
   strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: flask-app
     spec:
@@ -22,13 +24,23 @@ spec:
         - name: ENV
           valueFrom:
             configMapKeyRef:
-              name: env
+              name: environment
               key: env
         - name: HTTP_PORT
           valueFrom:
-            configMapKeyRef:
-              name: env
+            configMapKeyRef:  
+              name: environment
               key: http_port
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: payme
+              key: token
+        - name: ADDRESS
+          valueFrom: 
+            secretKeyRef:
+              name: payme
+              key: address
         - name: POSTGRES_HOST
           valueFrom:
             secretKeyRef:
@@ -43,32 +55,22 @@ spec:
           valueFrom:
             secretKeyRef:
               name: psql
-              key: pg_user
+              key: pg_user   
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: psql
+              key: pg_password                 
         - name: POSTGRES_PORT
           valueFrom:
             secretKeyRef:
               name: psql
               key: pg_port
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: psql
-              key: pg_password
-        - name: TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: payme
-              key: token
-        - name: ADDRESS
-          valueFrom:
-            secretKeyRef:
-              name: payme
-              key: address
-        - name: MY_NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
         - name: MY_POD_NAME
-          valueFrom:
+          valueFrom: 
             fieldRef:
               fieldPath: metadata.name
+        - name: MY_NODE_NAME
+          valueFrom:  
+            fieldRef:
+              fieldPath: spec.nodeName

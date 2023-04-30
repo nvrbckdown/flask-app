@@ -11,10 +11,16 @@ postgres_port = os.environ.get("POSTGRES_PORT")
 postgres_db = os.environ.get("POSTGRES_DB")
 postgres_user = os.environ.get("POSTGRES_USER")
 postgres_password = os.environ.get("POSTGRES_PASSWORD")
+mongo_host = os.environ.get("MONGO_HOST")
+mongo_db = os.environ.get("MONGO_DB")
+mongo_user = os.environ.get("MONGO_USER")
+mongo_password = os.environ.get("MONGO_PORT")
+mongo_port = os.environ.get("MONGO_PASSWORD")
 token = os.environ.get("TOKEN"),
 address = os.environ.get("ADDRESS")
 pod = os.environ.get("MY_POD_NAME")
 node = os.environ.get("MY_NODE_NAME")
+ns = os.environ.get("MY_POD_NAMESPACE")
 
 @app.route('/', methods=['GET'])
 def default():
@@ -40,6 +46,18 @@ def get_project():
 	}
     return jsonify(res)
 
+@app.route('/mongo', methods=['GET'])
+def get_project():
+    res = {
+		'string': 'PSQL',
+        'mongo': mongo_host,
+        'mongo_port': mongo_port,
+        'mongo_user': mongo_user,
+        'mongo_db': mongo_db,
+        'mongo_password': mongo_password,
+	}
+    return jsonify(res)
+
 @app.route('/payme', methods=['GET'])
 def get_address():
     res = {
@@ -54,6 +72,7 @@ def get_pod():
     res = {
 		'string': 'Payme',
         'pod': pod,
-        'node': node
+        'node': node,
+        'namespace': ns
 	}
     return jsonify(res)
