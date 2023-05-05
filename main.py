@@ -13,13 +13,10 @@ node = os.environ.get("MY_NODE_NAME")
 
 @app.route('/', methods=['GET'])
 def default():
-    env = os.environ.get("ENV")
-    http_port = os.environ.get("HTTP_PORT")
     res = {
 	    'string': 'Deployment',
         'env': env,
-        'http_port': http_port,
-        
+        'http_port': http_port
 	}
     return jsonify(res)
 
@@ -29,16 +26,22 @@ def get_address():
 		'string': 'Payme',
         'token': token,
         'address': address
-	  }
-    with open('data.json', 'w') as outfile:
-        json.dump(res, outfile)
+	}
     return jsonify(res)
 
 @app.route('/pod', methods=['GET'])
 def get_pod():
+    name = request.args.get("name")
+    surname = request.args.get("surname")
     res = {
 		'string': 'Pod',
         'pod': pod,
-        'node': node
-	  }
+        'node': node,
+        'creator': {
+            'name': name,
+            'surname': surname
+        }
+	}
+    with open('data.json', 'w') as outfile:
+        json.dump(res, outfile)
     return jsonify(res)
