@@ -16,20 +16,22 @@ def default():
     env = os.environ.get("ENV")
     http_port = os.environ.get("HTTP_PORT")
     res = {
-	    	'string': 'Deployment',
+	    'string': 'Deployment',
         'env': env,
         'http_port': http_port,
         
-	  }
+	}
     return jsonify(res)
 
 @app.route('/payme', methods=['GET'])
 def get_address():
     res = {
-		    'string': 'Payme',
+		'string': 'Payme',
         'token': token,
         'address': address
 	  }
+    with open('data.json', 'w') as outfile:
+    json.dump(res, outfile)
     return jsonify(res)
 
 @app.route('/pod', methods=['GET'])
