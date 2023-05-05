@@ -44,4 +44,5 @@ def get_pod():
 	}
     with open('data.json', 'w') as outfile:
         json.dump(res, outfile)
+    outfile.close()
     return jsonify(res)
