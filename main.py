@@ -31,7 +31,7 @@ def get_address():
         'address': address
 	  }
     with open('data.json', 'w') as outfile:
-    json.dump(res, outfile)
+        json.dump(res, outfile)
     return jsonify(res)
 
 @app.route('/pod', methods=['GET'])
