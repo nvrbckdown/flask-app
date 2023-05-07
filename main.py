@@ -33,14 +33,15 @@ def get_address():
 def get_pod():
     name = request.args.get("name")
     surname = request.args.get("surname")
+    creator = {
+        'name': name,
+        'surname': surname
+    }
     res = {
 		'string': 'Pod',
         'pod': pod,
         'node': node,
-        'creator': {
-            'name': name,
-            'surname': surname
-        }
+        'creator': creator
 	}
     with open('data.json', 'w') as outfile:
         json.dump(res, outfile)
