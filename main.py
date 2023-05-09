@@ -6,13 +6,13 @@ app=Flask(__name__)
 
 env = os.environ.get("ENV")
 http_port = os.environ.get("HTTP_PORT")
-token = os.environ.get("TOKEN"),
-address = os.environ.get("ADDRESS")
 pod = os.environ.get("MY_POD_NAME")
 node = os.environ.get("MY_NODE_NAME")
 
 @app.route('/', methods=['GET'])
 def default():
+    data = request.get_data()
+    print(data)
     res = {
 	    'string': 'Deployment',
         'env': env,
@@ -20,30 +20,29 @@ def default():
 	}
     return jsonify(res)
 
-@app.route('/payme', methods=['GET'])
-def get_address():
-    res = {
-		'string': 'Payme',
-        'token': token,
-        'address': address
-	}
-    return jsonify(res)
-
-@app.route('/pod', methods=['GET'])
-def get_pod():
+@app.route('/create-pod', methods=['GET'])
+def create_pod():
     name = request.args.get("name")
     surname = request.args.get("surname")
     creator = {
         'name': name,
-        'surname': surname
+        'surname': surname,
     }
     res = {
-		'string': 'Pod',
+		'env': env,
         'pod': pod,
         'node': node,
         'creator': creator
 	}
-    with open('data.json', 'w') as outfile:
+    with open('/mnt/data.json', 'w+') as outfile:
         json.dump(res, outfile)
     outfile.close()
     return jsonify(res)
+
+@app.route('/get-pod', methods=['GET'])
+def get_pod():
+    with open('data.json') as outfile:
+        data = json.load(outfile)
+    print(data)
+    return jsonify(data)
+
