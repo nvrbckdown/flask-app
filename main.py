@@ -34,15 +34,15 @@ def create_pod():
         'node': node,
         'creator': creator
 	}
-    with open('/mnt/data.json', 'w+') as outfile:
+    with open('data.json', 'w+') as outfile:
         json.dump(res, outfile)
     outfile.close()
     return jsonify(res)
 
 @app.route('/get-pod', methods=['GET'])
 def get_pod():
-    with open('/mnt/data.json', 'r') as outfile:
-        data = outfile.read()
+    with open('data.json', 'r') as outfile:
+        data = json.loads(outfile.read())
     print(data)
     return jsonify(data)
 
