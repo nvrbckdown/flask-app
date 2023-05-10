@@ -41,8 +41,8 @@ def create_pod():
 
 @app.route('/get-pod', methods=['GET'])
 def get_pod():
-    with open('data.json') as outfile:
-        data = json.load(outfile)
+    with open('/mnt/data.json', 'r') as outfile:
+        data = outfile.read()
     print(data)
     return jsonify(data)
 
