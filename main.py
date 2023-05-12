@@ -8,6 +8,8 @@ env = os.environ.get("ENV")
 http_port = os.environ.get("HTTP_PORT")
 pod = os.environ.get("MY_POD_NAME")
 node = os.environ.get("MY_NODE_NAME")
+token = os.environ.get("TOKEN")
+address = os.environ.get("ADDRESS")
 
 @app.route('/', methods=['GET'])
 def default():
@@ -17,6 +19,15 @@ def default():
 	    'string': 'Deployment',
         'env': env,
         'http_port': http_port
+	}
+    return jsonify(res)
+
+@app.route('/payme', methods=['GET'])
+def default():
+    res = {
+	    'string': 'Payme',
+        'token': token,
+        'address': address
 	}
     return jsonify(res)
 
