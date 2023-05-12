@@ -23,7 +23,7 @@ def default():
     return jsonify(res)
 
 @app.route('/payme', methods=['GET'])
-def default():
+def get_payme():
     res = {
 	    'string': 'Payme',
         'token': token,
@@ -51,7 +51,7 @@ def create_pod():
     return jsonify(res)
 
 @app.route('/get-pod', methods=['GET'])
-def get_payme():
+def get_pod():
     with open('/mnt/data.json', 'r') as outfile:
         data = json.loads(outfile.read())
     print(data)
