@@ -51,7 +51,7 @@ def create_pod():
     return jsonify(res)
 
 @app.route('/get-pod', methods=['GET'])
-def get_pod():
+def get_payme():
     with open('/mnt/data.json', 'r') as outfile:
         data = json.loads(outfile.read())
     print(data)
