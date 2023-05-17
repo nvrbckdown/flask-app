@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import json
 import os
+import psycopg2
 
 app=Flask(__name__)
 
@@ -8,8 +9,14 @@ env = os.environ.get("ENV")
 http_port = os.environ.get("HTTP_PORT")
 pod = os.environ.get("MY_POD_NAME")
 node = os.environ.get("MY_NODE_NAME")
+ns = os.environ.get("MY_NAMESPACE")
 token = os.environ.get("TOKEN")
 address = os.environ.get("ADDRESS")
+db_host = os.environ.get("DB_HOST")
+db_port = os.environ.get("DB_PORT")
+db_user = os.environ.get("DB_USER")
+db_password = os.environ.get("DB_PASSWORD")
+db_name = os.environ.get("DB_NAME")
 
 @app.route('/', methods=['GET'])
 def default():
@@ -57,3 +64,36 @@ def get_pod():
     print(data)
     return jsonify(data)
 
+def postgres():
+    conn = psycopg2.connect(
+        host=db_host,
+        database=db_name,
+        user=db_user,
+        password=db_password,
+        port=db_port)
+    return conn
+
+@app.route('/get-company', methods=['GET'])
+def get_company():
+    con = postgres()
+    cur = con.cursor()
+    query = "SELECT * FROM company"
+    cur.execute(query=query)
+    companies = cur.fetchall()
+    cur.close()
+    con.close()
+    print(companies)
+    return render_template('index.html', companies=companies)
+
+@app.route('/select-company', methods=['GET'])
+def select_company():
+    id = request.args.get("id")
+    con = postgres()
+    cur = con.cursor()
+    query = "SELECT * FROM {company} WHERE id={id} ".format(id=id, company="company")
+    cur.execute(query=query)
+    companies = cur.fetchall()
+    cur.close()
+    con.close()
+    return render_template('index.html', companies=companies)
+    

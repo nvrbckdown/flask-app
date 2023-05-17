@@ -1,19 +1,59 @@
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: block-pv
-spec:
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  volumeMode: Filesystem
-  storageClassName: longhorn
-  persistentVolumeReclaimPolicy: Retain
-  csi:
-    driver: driver.longhorn.io
-    fsType: ext4
-    volumeAttributes:
-      numberOfReplicas: '3'
-      staleReplicaTimeout: '2880'
-    volumeHandle: existing-longhorn-volume
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: flask-web-app
+    name: flask-web-app
+    namespace: maruf
+  spec:
+    selector:
+      matchLabels:
+        app: flask-web-app
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: flask-web-app
+      spec:
+        containers:
+        - name: flask-app
+          image: nvrbckdown/flask-app
+          imagePullPolicy: Always
+          env:
+          - name: HTTP_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: http_port
+                name: environment
+          - name: ENV
+            valueFrom:
+              configMapKeyRef:
+                key: env
+                name: environment
+          - name: TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: payme
+          - name: ADDRESS
+            valueFrom:
+              secretKeyRef:
+                key: address
+                name: payme
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          volumeMounts:
+          - mountPath: /mnt
+            name: test-volume
+        volumes:
+        - hostPath:
+            path: /tmp
+            type: Directory
+          name: test-volume
