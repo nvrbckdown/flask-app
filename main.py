@@ -29,7 +29,7 @@ def default():
 	}
     return jsonify(res)
 
-@app.route('/payme', methods=['GET'])
+@app.route('/get-secret', methods=['GET'])
 def get_payme():
     res = {
 	    'string': 'Payme',
@@ -50,6 +50,7 @@ def create_pod():
 		'env': env,
         'pod': pod,
         'node': node,
+        'ns': ns,
         'creator': creator
 	}
     with open('/mnt/data.json', 'w+') as outfile:
