@@ -5,13 +5,8 @@ import psycopg2
 
 app=Flask(__name__)
 
-env = os.environ.get("ENV")
-http_port = os.environ.get("HTTP_PORT")
-pod = os.environ.get("MY_POD_NAME")
-node = os.environ.get("MY_NODE_NAME")
-ns = os.environ.get("MY_NAMESPACE")
-token = os.environ.get("TOKEN")
-address = os.environ.get("ADDRESS")
+env = os.environ.get("ENV", "staging")
+http_port = os.environ.get("HTTP_PORT", "80")
 db_host = os.environ.get("DB_HOST")
 db_port = os.environ.get("DB_PORT")
 db_user = os.environ.get("DB_USER")
@@ -29,34 +24,6 @@ def default():
 	}
     return jsonify(res)
 
-@app.route('/get-secret', methods=['GET'])
-def get_payme():
-    res = {
-	    'string': 'Payme',
-        'token': token,
-        'address': address
-	}
-    return jsonify(res)
-
-@app.route('/create-pod', methods=['GET'])
-def create_pod():
-    name = request.args.get("name")
-    surname = request.args.get("surname")
-    creator = {
-        'name': name,
-        'surname': surname,
-    }
-    res = {
-		'env': env,
-        'pod': pod,
-        'node': node,
-        'ns': ns,
-        'creator': creator
-	}
-    with open('/mnt/data.json', 'w+') as outfile:
-        json.dump(res, outfile)
-    outfile.close()
-    return jsonify(res)
 
 @app.route('/get-pod', methods=['GET'])
 def get_pod():
@@ -72,6 +39,8 @@ def postgres():
         user=db_user,
         password=db_password,
         port=db_port)
+    if conn():
+        print("Connection to database is successful")
     return conn
 
 @app.route('/get-company', methods=['GET'])
