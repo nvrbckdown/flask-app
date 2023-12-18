@@ -8,11 +8,11 @@ app=Flask(__name__)
 
 env = os.environ.get("ENV", "staging")
 http_port = os.environ.get("HTTP_PORT", "80")
-db_host = os.environ.get("DB_HOST")
-db_port = os.environ.get("DB_PORT")
-db_user = os.environ.get("DB_USER")
-db_password = os.environ.get("DB_PASSWORD")
-db_name = os.environ.get("DB_NAME")
+db_host = os.environ.get("DB_HOST", "database")
+db_port = os.environ.get("DB_PORT", "5432")
+db_user = os.environ.get("DB_USER", "reader")
+db_password = os.environ.get("DB_PASSWORD", "reader123")
+db_name = os.environ.get("DB_NAME", "books")
 
 @app.route('/', methods=['GET'])
 def default():
