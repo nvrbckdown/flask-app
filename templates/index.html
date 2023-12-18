@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %} Companies {% endblock %}</h1>
-{% for company in companies %}
-<div class='company'>
-    <h3>{{ company[0] }} - {{ company[1] }} CEO: {{ company[2] }}</h3>
+<h1>{% block title %} Books {% endblock %}</h1>
+{% for book in books %}
+<div class='book'>
+    <h3>{{ book[0] }} - {{ book[1] }} CEO: {{ book[2] }}</h3>
     <i>
-        <p>(Address: {{ company[3] }})</p>
+        <p>(Address: {{ book[3] }})</p>
     </i>
 </div>
 {% endfor %}

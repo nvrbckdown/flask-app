@@ -2,8 +2,10 @@ FROM python:3.8-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY reqs.txt .
 
 RUN pip install -r reqs.txt
+
+COPY . .
 
 CMD ["python3", "-m" , "flask", "run", "--host=0.0.0.0"]

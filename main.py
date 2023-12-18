@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import json
 import os
 import psycopg2
+import init_db
 
 app=Flask(__name__)
 
@@ -39,31 +40,30 @@ def postgres():
         user=db_user,
         password=db_password,
         port=db_port)
-    if conn():
-        print("Connection to database is successful")
+    init_db.init_db()
     return conn
 
-@app.route('/get-company', methods=['GET'])
-def get_company():
+@app.route('/get-book', methods=['GET'])
+def get_book():
     con = postgres()
     cur = con.cursor()
-    query = "SELECT * FROM company"
+    query = "SELECT * FROM books"
     cur.execute(query=query)
-    companies = cur.fetchall()
+    books = cur.fetchall()
     cur.close()
     con.close()
-    print(companies)
-    return render_template('index.html', companies=companies)
+    print(books)
+    return render_template('index.html', books=books)
 
-@app.route('/select-company', methods=['GET'])
-def select_company():
+@app.route('/select-book', methods=['GET'])
+def select_book():
     id = request.args.get("id")
     con = postgres()
     cur = con.cursor()
-    query = "SELECT * FROM {company} WHERE id={id} ".format(id=id, company="company")
+    query = "SELECT * FROM {book} WHERE id={id} ".format(id=id, book="book")
     cur.execute(query=query)
-    companies = cur.fetchall()
+    books = cur.fetchall()
     cur.close()
     con.close()
-    return render_template('index.html', companies=companies)
+    return render_template('index.html', books=books)
     
