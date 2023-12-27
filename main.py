@@ -7,7 +7,7 @@ import init_db
 app=Flask(__name__)
 
 env = os.environ.get("ENV", "staging")
-# http_port = os.environ.get("HTTP_PORT", "80")
+http_port = os.environ.get("HTTP_PORT", "80")
 # db_host = os.environ.get("DB_HOST", "database")
 # db_port = os.environ.get("DB_PORT", "5432")
 # db_user = os.environ.get("DB_USER", "reader")
