@@ -16,8 +16,6 @@ http_port = os.environ.get("HTTP_PORT", "80")
 
 @app.route('/', methods=['GET'])
 def default():
-    data = request.get_data()
-    print(data)
     res = {
 	    'string': 'Pod',
         'env': env,
@@ -25,6 +23,15 @@ def default():
 	}
     return jsonify(res)
 
+@app.route('/check-ingress', methods=['GET'])
+def check_ingress():
+    res = {
+        'domain': request.headers['Host'],
+        'endpoint': '/check-ingress',
+        'full_path:': request.headers['Host'] + '/check-ingress'
+    }
+    return res
+    
 
 # @app.route('/get-pod', methods=['GET'])
 # def get_pod():
