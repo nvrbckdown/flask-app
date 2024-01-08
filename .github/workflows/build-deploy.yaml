@@ -30,4 +30,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: nvrbckdown/flask-app:test
+          tags: nvrbckdown/flask-app:practice-2
